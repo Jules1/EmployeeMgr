@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <div class="login-form center-block" align="center">
+    <h2>Add An Employee</h2>
+    <form action="{{ url_for('addEmployee') }}" method="post">
+      {{ form.csrf_token }}
+      <div class="form-group" align="center">
+        First Name: {{form.firstn}}<br><br>
+        Last Name: {{form.lastn}}<br><br>
+        Position: {{form.position}}<br><br>
+        Location: {{form.location}}<br><br>
+        Starting Date: {{form.startdate}}<br><br>
+        Duration (in weeks): {{form.duration}}<br><br>
+        Starting Salary: {{form.salary}}<br><br>
+        Retention: {{form.retention}}<br><br>
+      </div>
+      {% include 'flash_messages.html' %}
+      <button type="submit" name="submit" class="btn btn-primary btn-block">Add user</button>
+    </form>
+  </div>
+{% endblock %}

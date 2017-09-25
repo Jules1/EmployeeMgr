@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <div class="login-form center-block" align="center">
+          <ul>
+        {% for employee in employees %}
+        <li> {{employee.firstname}} {{employee.lastname}} {{employee.position}}
+        </li>
+        {% endfor %}
+      </ul>
+  </div>
+{% endblock %}

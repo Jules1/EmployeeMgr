@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<h1 class='page-header'>Register a new user</h1>
+<p class='lead'>Fill in this form to create a new user</p>
+
+{% include 'flash_messages.html' %}
+    <form method='POST' action='{{url_for('register')}}' enctype='multipart/form-data'>
+        E-mail {{form.email }}<br><br>
+        Password {{ form.password }}<br><br>
+        Name {{ form.name }}<br><br>
+        Age {{ form.age }}<br><br>
+        Gender {{ form.gender }}<br><br>
+        Upload an image {{ form.image }}
+        <input type='file' name='picture' accept='image/*' class='fields'><br><br>
+        <input type='submit' value='Submit'>
+    </form>
+
+{% endblock %}
