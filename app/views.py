@@ -10,7 +10,7 @@ from flask import render_template, request, redirect, url_for, flash
 from wtforms import DecimalField, DateField, TextField, Form, IntegerField, SelectField, validators, PasswordField, ValidationError
 
 from app import db
-from models import employee
+from app import employee
 
 ###
 # Routing for your application.
@@ -26,7 +26,7 @@ class EmployeeForm(Form):
     lastn = TextField('lastn', [validators.Required()])
     position = TextField('position', [validators.Required()])
     location = TextField('location', [validators.Required()])
-    startdate = DateField('startdate', [validators.Required()])
+    startdate = DateField('startdate', format ='%d/%m/%y')
     duration = IntegerField('duration', [validators.Required()])
     salary = DecimalField('salary', [validators.Required()])
     retention = DecimalField('retention', [validators.Required()])
