@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '348032348643'
@@ -8,15 +9,14 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
 class employee(db.Model):
-    __tablename__ = 'employee'
     id = db.Column(db.Integer, primary_key="True")
     firstname = db.Column(db.String(30))
     lastname = db.Column(db.String(30))
     position = db.Column(db.String(30))
     location = db.Column(db.String(30))
-    startdate = db.Column(db.Date)
+    startdate = db.Column(db.DateTime)
     duration = db.Column(db.Integer)
-    enddate = db.Column(db.Date)
+    enddate = db.Column(db.DateTime)
     vacationEnt = db.Column(db.Integer)
     vacationtaken = db.Column(db.Integer)
     vacationBalance = db.Column(db.Integer)
