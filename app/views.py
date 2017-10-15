@@ -8,7 +8,7 @@ This file creates your application.
 from app import app
 from flask import render_template, request, redirect, url_for, flash
 from wtforms import DecimalField, DateField, TextField, Form, IntegerField, SelectField, validators, PasswordField, ValidationError
-
+from datetime import datetime
 from app import db
 from app import employee
 
@@ -37,22 +37,22 @@ class EmployeeForm(Form):
 def addEmployee():
     form = EmployeeForm(csrf_enabled=False)
     if request.method == 'POST':
-        if form.validate():
-            fname = request.form['fname']
-            lname = request.form['lname']
-            position = request.form['position']
-            location = request.form['location']
-            startdate = request.form['startdate']
-            duration = request.form['duration']
-            salary = request.form['salary']
-            retention = request.form['retention']
-            
-            
-            basicSalary = salary - retention
-            
-            newEmp = employee(fname,lname,position,location,startdate,duration,salary,retention,basicSalary)
-            db.session.add(newEmp)
-            db.session.commit()
+        #if form.validate():
+        fname = request.form['firstn']
+        lname = request.form['lastn']
+        position = request.form['position']
+        location = request.form['location']
+        startdate = datetime.strptime(request.form['startdate'], "%d/%m/%y")
+        duration = int(request.form['duration'])
+        salary = float(request.form['salary'])
+        retention = float(request.form['retention'])
+        
+        
+        basicSalary = salary - retention
+        
+        newEmp = employee(firstname = fname, lastname =lname,position=position,location=location,startdate=startdate,duration=duration,salary=salary,retention=retention,netBasicSalary=basicSalary)
+        db.session.add(newEmp)
+        db.session.commit()
             
             
         flash('New employee has been registered successfully', 'success')
