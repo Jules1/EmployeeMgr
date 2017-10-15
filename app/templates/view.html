@@ -3,8 +3,8 @@
 {% block main %}
   <div class="login-form center-block" align="center">
           <ul>
-        {% for employee in employees %}
-        <li> {{employee.id}} {{employee.firstname}} {{employee.lastname}} {{employee.position}}
+        {% for e in employees %}
+        <li>{{e.firstname}} {{e.lastname}} {{e.position}} {{e.startdate}} {{e.enddate}} {{e.duration}}
         </li>
         {% endfor %}
       </ul>

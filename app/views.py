@@ -8,7 +8,7 @@ This file creates your application.
 from app import app
 from flask import render_template, request, redirect, url_for, flash
 from wtforms import DecimalField, DateField, TextField, Form, IntegerField, SelectField, validators, PasswordField, ValidationError
-from datetime import datetime
+from datetime import datetime, timedelta
 from app import db
 from app import employee
 
@@ -47,10 +47,10 @@ def addEmployee():
         salary = float(request.form['salary'])
         retention = float(request.form['retention'])
         
-        
+        enddate = startdate + timedelta(weeks=duration)
         basicSalary = salary - retention
         
-        newEmp = employee(firstname = fname, lastname =lname,position=position,location=location,startdate=startdate,duration=duration,salary=salary,retention=retention,netBasicSalary=basicSalary)
+        newEmp = employee(firstname = fname, lastname =lname,position=position,location=location,startdate=startdate,duration=duration,salary=salary,retention=retention,netBasicSalary=basicSalary, enddate = enddate)
         db.session.add(newEmp)
         db.session.commit()
             
