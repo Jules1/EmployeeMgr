@@ -57,7 +57,7 @@ def addEmployee():
             
         flash('New employee has been registered successfully', 'success')
     else:
-        flash("Employee not added, please enter all fields", "alert")
+        flash("Employee not added, please enter all fields", "danger")
     return render_template("addEmployee.html", form = form)
     
 
@@ -70,8 +70,13 @@ def list_profiles():
 def searchEmp():
     """route to search for employee"""
     form = EmployeeForm(csrf_enabled=False)
-    emp = employee.query.filter_by(firstname = request.form['firstn']).all() 
-    return render_template('search.html',emp)
+    emp = employee.query.filter_by(firstname = request.form['firstn']).all()
+
+    if emp is None:
+        flash('No employee by that name was found', 'danger')
+    else:
+        flash('The following employees were found', 'success') 
+    return render_template('search.html', form = form, emp= emp)
 
 ###
 # The functions below should be applicable to all Flask apps.

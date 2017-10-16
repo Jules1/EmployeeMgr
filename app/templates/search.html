@@ -12,9 +12,13 @@
 	</form>
 	<div class="login-form center-block" align="center">
 	{% include 'flash_messages.html' %}
+	<ul>
+	<br><br>
 	{% for e in emp %}
 	<li>
-		{{e.firstname}} {{e.lastname}} {{e.position}}
+		{{e.firstname}} {{e.lastname}} {{e.position}}<br><br>
 	</li>
+	{% endfor %}
+	</ul>
 	</div>
 {% endblock %}
