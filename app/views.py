@@ -26,8 +26,8 @@ class EmployeeForm(Form):
     lastn = TextField('lastn', [validators.Required()])
     position = TextField('position', [validators.Required()])
     location = TextField('location', [validators.Required()])
-    startdate = DateField('startdate', format ='%d/%m/%y')
-    duration = IntegerField('duration', [validators.Required()])
+    startdate = DateField('startdate', format ='%d/%m/%y', render_kw={"placeholder":"dd/mm/yyyy"})
+    duration = IntegerField('duration', [validators.Required()], render_kw={"placeholder":"duration in weeks"})
     salary = DecimalField('salary', [validators.Required()])
     retention = DecimalField('retention', [validators.Required()])
     
@@ -36,8 +36,8 @@ class EmployeeForm(Form):
 @app.route('/addEmployee/', methods = ['POST','GET'])
 def addEmployee():
     form = EmployeeForm(csrf_enabled=False)
-    if request.method == 'POST':
-        #if form.validate():
+    if request.method == 'POST' and form.validate():
+
         fname = request.form['firstn']
         lname = request.form['lastn']
         position = request.form['position']
@@ -56,6 +56,8 @@ def addEmployee():
             
             
         flash('New employee has been registered successfully', 'success')
+    else:
+        flash("Employee not added, please enter all fields", "alert")
     return render_template("addEmployee.html", form = form)
     
 
@@ -63,6 +65,13 @@ def addEmployee():
 def list_profiles():
     """route for viewing list of profiles"""
     return render_template('view.html', employees=employee.query.all())
+
+@app.route('/search', methods=['POST','GET'])
+def searchEmp():
+    """route to search for employee"""
+    form = EmployeeForm(csrf_enabled=False)
+    emp = employee.query.filter_by(firstname = request.form['firstn']).all() 
+    return render_template('search.html',emp)
 
 ###
 # The functions below should be applicable to all Flask apps.
