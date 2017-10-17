@@ -36,7 +36,7 @@ class EmployeeForm(Form):
 @app.route('/addEmployee/', methods = ['POST','GET'])
 def addEmployee():
     form = EmployeeForm(csrf_enabled=False)
-    if request.method == 'POST' and form.validate():
+    if request.method == 'POST':
 
         fname = request.form['firstn']
         lname = request.form['lastn']
@@ -66,17 +66,18 @@ def list_profiles():
     """route for viewing list of profiles"""
     return render_template('view.html', employees=employee.query.all())
 
-@app.route('/search', methods=['POST','GET'])
+@app.route('/search/', methods=['POST', 'GET'])
 def searchEmp():
     """route to search for employee"""
     form = EmployeeForm(csrf_enabled=False)
-    emp = employee.query.filter_by(firstname = request.form['firstn']).all()
+    if request.method=='POST':
+       emp = employee.query.filter_by(firstname = request.form['firstn']).all()
 
-    if emp is None:
-        flash('No employee by that name was found', 'danger')
-    else:
-        flash('The following employees were found', 'success') 
-    return render_template('search.html', form = form, emp= emp)
+    #if emp is None:
+    #    flash('No employee by that name was found', 'danger')
+    #else:
+    #    flash('The following employees were found', 'success') 
+    return render_template('search.html', form = form, empl= emp)
 
 ###
 # The functions below should be applicable to all Flask apps.
