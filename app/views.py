@@ -70,14 +70,15 @@ def list_profiles():
 def searchEmp():
     """route to search for employee"""
     form = EmployeeForm(csrf_enabled=False)
-    if request.method=='POST':
-       emp = employee.query.filter_by(firstname = request.form['firstn']).all()
+    if request.method == 'POST'
+        srch = request.form['firstn'] 
+        emp = employee.query.filter_by(firstname = srch).all()
 
     #if emp is None:
     #    flash('No employee by that name was found', 'danger')
     #else:
     #    flash('The following employees were found', 'success') 
-    return render_template('search.html', form = form, empl= emp)
+    return render_template('search.html', form=form, employees=emp)
 
 ###
 # The functions below should be applicable to all Flask apps.
