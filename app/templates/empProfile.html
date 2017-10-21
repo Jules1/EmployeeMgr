@@ -10,6 +10,7 @@
   </div>	
 
   <div class="appInfo" float:right>
+      <a href="{{url_for('appraise', empid=e.id)}}">Add Appraisal</a>
   		<h4>Appraisal Rating: </h4>{{e.score}}
   		<h4>Comments: </h4>{{e.empNotes}}
   </div>

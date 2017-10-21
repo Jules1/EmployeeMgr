@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block main %}
+{% for e in emp%}
+	<form action="{{url_for('appraise', empid=e.id)}}" method="POST" enctype="multipart/form-data">
+		{{form.csrf_token}}
+		<div class="form-group" align="center">
+			<h2>Appraisal for {{e.firstname}} {{e.lastname}}</h2><br>
+			Current score: {{e.score}}<br><br>
+			Appraisal Rating: {{form.score}}<br><br>
+			Notes: {{form.notes}}
+		</div>
+		<button type="submit" name="submit" class="btn btn-primary btn-block">Submit Appraisal</button>
+	</form>
+{% endfor %}
+{% endblock %}

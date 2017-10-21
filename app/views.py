@@ -33,7 +33,10 @@ class EmployeeForm(Form):
 
 class SearchForm(Form):
     firstn = TextField('firstn', [validators.Required('Please enter first name before searching')])
-    
+
+class appraiseForm(Form):
+    score = IntegerField('score',[validators.Required()], render_kw={"placeholder":"Appraisal Rating"})
+    notes = TextField('notes', [validators.Required()], render_kw={"placeholder":"Notes about employee"})
 
 
 @app.route('/addEmployee/', methods = ['POST','GET'])
@@ -83,12 +86,27 @@ def searchEmp():
     
     return render_template('search.html', form=form)
 
-@app.route('/empProfile/<empid>')
+@app.route('/empProfile/<empid>', methods=['POST','GET'])
 def empProfile(empid):
     """Information for a singular profile"""
     emp = employee.query.filter_by(id = empid).all()
     return render_template('empProfile.html', employees=emp)
 
+@app.route('/Appraisal/<empid>', methods=['POST', 'GET'])
+def appraise(empid):
+    """Form to add employee appraisal"""
+    form = appraiseForm(csrf_enabled=False)
+    emp = employee.query.filter_by(id = empid).all()
+    if request.method=='POST':
+        emp.score = int(request.form['score'])
+        db.session.commit()
+        emp.empNotes = request.form['notes']
+        db.session.commit()
+        flash("Appraisal has been submitted", "success")
+        return render_template('appraisal.html', form=form, emp=emp)
+    else:
+        flash("Something went wrong","danger")
+    return render_template('appraisal.html', form=form, emp=emp)
 ###
 # The functions below should be applicable to all Flask apps.
 ###
