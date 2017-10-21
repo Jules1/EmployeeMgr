@@ -7,7 +7,11 @@
     <h4>Contract Start Date : </h4> {{e.startdate}}
     <h4>Contract Duration : </h4> {{e.duration}}
     <h4>Contract End Date : </h4>{{e.enddate}}
-  	{% endfor %}
+  </div>	
 
+  <div class="appInfo" float:right>
+  		<h4>Appraisal Rating: </h4>{{e.score}}
+  		<h4>Comments: </h4>{{e.empNotes}}
   </div>
+  {% endfor %}
 {% endblock %}

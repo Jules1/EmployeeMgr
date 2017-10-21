@@ -25,6 +25,7 @@
                   <td>{{ e.startdate }}</td>
                   <td>{{ e.duration }} weeks</td>
                   <td>{{ e.enddate }}</td>
+                  <td><a href="{{url_for('empProfile', empid=e.id)}}">View Profile</a>
                </tr>
             {% endfor %}
          </tbody>

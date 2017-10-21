@@ -27,6 +27,7 @@ class employee(db.Model):
     retention = db.Column(db.Float)
     netBasicSalary = db.Column(db.Float)
     score = db.Column(db.Integer, default =0)
+    empNotes = db.Column(db.Text, default='')
 
 db.create_all()
 
