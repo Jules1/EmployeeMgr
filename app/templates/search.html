@@ -2,25 +2,35 @@
 
 {% block main %}
 <h1 class="page-header">Search Employees</h1>
-	<form action="{{ url_for('searchEmp') }}" method="post" enctype="multipart/form-data">
+	<form action="{{ url_for('searchEmp') }}" method="POST" enctype="multipart/form-data">
 	{{ form.csrf_token }}
 	<div class="form-group" align="center">
 		Employee Name:<br><br>
-		{{form.firstn}}
+		{{ form.firstn }}
 	</div>
 	<button type="submit" name="submit" class ="btn btn-primary btn-block">Search Employees</button>
 	</form>
 
 	<div class="login-form center-block" align="center">
 	{% include 'flash_messages.html' %}
-	<ul>
-	<br><br>
+	<table>
+	<thead>
+	<tr><h3>Employees Found</h3></tr>
+	<tr>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Position</th>
+	</tr>
+	</thead>
+	<tbody>
 	{% for e in employees %}
-	<li>
-		{{e.firstname}} {{e.lastname}} {{e.position}}<br><br>
-	</li>
+		<td>{{e.firstname}}</td> 
+		<td>{{e.lastname}}</td> 
+		<td>{{e.position}}</td>
+		<td><a href="{{url_for('empProfile', empid=e.id)}}">View Profile</a>
 	{% endfor %}
-	</ul>
+	</tbody>
+	</table>
 	</div>
-	
+
 {% endblock %}

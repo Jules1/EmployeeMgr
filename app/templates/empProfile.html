@@ -1,0 +1,13 @@
+{% extends "base.html"%}
+
+{% block main %}
+  <div class="login-form center-block" align="left">
+   {% for e in employees %}
+    <h2>{{e.firstname}} {{e.lastname}}</h2>
+    <h4>Contract Start Date : </h4> {{e.startdate}}
+    <h4>Contract Duration : </h4> {{e.duration}}
+    <h4>Contract End Date : </h4>{{e.enddate}}
+  	{% endfor %}
+
+  </div>
+{% endblock %}

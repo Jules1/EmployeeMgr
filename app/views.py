@@ -30,6 +30,9 @@ class EmployeeForm(Form):
     duration = IntegerField('duration', [validators.Required()], render_kw={"placeholder":"duration in weeks"})
     salary = DecimalField('salary', [validators.Required()])
     retention = DecimalField('retention', [validators.Required()])
+
+class SearchForm(Form):
+    firstn = TextField('firstn', [validators.Required('Please enter first name before searching')])
     
 
 
@@ -37,7 +40,7 @@ class EmployeeForm(Form):
 def addEmployee():
     form = EmployeeForm(csrf_enabled=False)
     if request.method == 'POST':
-
+        #if form.validate():
         fname = request.form['firstn']
         lname = request.form['lastn']
         position = request.form['position']
@@ -53,8 +56,8 @@ def addEmployee():
         newEmp = employee(firstname = fname, lastname =lname,position=position,location=location,startdate=startdate,duration=duration,salary=salary,retention=retention,netBasicSalary=basicSalary, enddate = enddate)
         db.session.add(newEmp)
         db.session.commit()
-            
-            
+        
+        
         flash('New employee has been registered successfully', 'success')
     else:
         flash("Employee not added, please enter all fields", "danger")
@@ -66,19 +69,25 @@ def list_profiles():
     """route for viewing list of profiles"""
     return render_template('view.html', employees=employee.query.all())
 
-@app.route('/search/', methods=['POST', 'GET'])
+@app.route('/search', methods=['POST', 'GET'])
 def searchEmp():
     """route to search for employee"""
-    form = EmployeeForm(csrf_enabled=False)
-    if request.method == 'POST'
-        srch = request.form['firstn'] 
-        emp = employee.query.filter_by(firstname = srch).all()
+    form = SearchForm(csrf_enabled=False)
+    if request.method == 'POST':
+        found = employee.query.filter_by(firstname = request.form['firstn']).all()
+        if found is None:
+           flash('No employee by that name was found', 'danger')
+        else:
+           flash('The following employees were found', 'success') 
+        return render_template('search.html', form=form, employees=found)
+    
+    return render_template('search.html', form=form)
 
-    #if emp is None:
-    #    flash('No employee by that name was found', 'danger')
-    #else:
-    #    flash('The following employees were found', 'success') 
-    return render_template('search.html', form=form, employees=emp)
+@app.route('/empProfile/<empid>')
+def empProfile(empid):
+    """Information for a singular profile"""
+    emp = employee.query.filter_by(id = empid).all()
+    return render_template('empProfile.html', employees=emp)
 
 ###
 # The functions below should be applicable to all Flask apps.
