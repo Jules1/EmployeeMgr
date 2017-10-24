@@ -7,7 +7,7 @@
 			<h2>Appraisal for {{e.firstname}} {{e.lastname}}</h2><br>
 			Current score: {{e.score}}<br><br>
 			Appraisal Rating: {{form.score}}<br><br>
-			Notes: {{form.notes}}
+			Notes:<br> {{form.notes(cols="30",rows="5")}}
 		</div>
 		<button type="submit" name="submit" class="btn btn-primary btn-block">Submit Appraisal</button>
 		{%include 'flash_messages.html'%}

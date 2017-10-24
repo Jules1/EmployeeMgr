@@ -7,7 +7,7 @@ This file creates your application.
 
 from app import app
 from flask import render_template, request, redirect, url_for, flash
-from wtforms import DecimalField, DateField, TextField, Form, IntegerField, SelectField, validators, PasswordField, ValidationError
+from wtforms import TextAreaField, DecimalField, DateField, TextField, Form, IntegerField, SelectField, validators, PasswordField, ValidationError
 from datetime import datetime, timedelta
 from app import db
 from app import employee
@@ -36,7 +36,7 @@ class SearchForm(Form):
 
 class appraiseForm(Form):
     score = IntegerField('score',[validators.Required()], render_kw={"placeholder":"Appraisal Rating"})
-    notes = TextField('notes', [validators.Required()], render_kw={"placeholder":"Notes about employee"})
+    notes = TextAreaField('notes', [validators.Required()], render_kw={"placeholder":"Notes about employee"})
 
 
 @app.route('/addEmployee/', methods = ['POST','GET'])
@@ -108,7 +108,18 @@ def appraise(empid):
 
 @app.route('/Vacation/<empid>', methods=['POST','GET'])
 def vacation(empid):
-    return render_template('vacationUpdate')
+    """form to schedule vacation days"""
+    form = vacationForm(csrf_enabled=False)
+    emp = employee.query.filter_by(id=empid).all()
+    if request.method == 'POST':
+        emp.vacation += int(request.form['vacDays'])
+        db.session.commit()
+        return render_template('vacationUpdate.html',form=form, emp = emp)
+    return render_template('vacationUpdate.html', form=form, emp=emp)
+
+@app.route('/Sick/<empid>', methods=['POST','GET'])
+def sick(empid):
+    return render_template('sickDays.html')
 ###
 # The functions below should be applicable to all Flask apps.
 ###

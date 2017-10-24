@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block main %}
+{% for e in emp%}
+	<form action="{{url_for('vacation', empid=e.id)}}" method="POST" enctype="multipart/form-data">
+		{{form.csrf_token}}
+		<div class="form-group" align="center">
+			<h2>Vacation Information for {{e.firstname}} {{e.lastname}}</h2><br>
+			Initial available Vacation Days : {{e.vacationEnt}}<br><br>
+			Available Vacation Days: {{e.vacationDays}}<br><br>
+			Vacation days to be granted: {{form.vacation}}<br><br>
+		</div>
+		<button type="submit" name="submit" class="btn btn-primary btn-block">Grant Vacation Days</button>
+		{%include 'flash_messages.html'%}
+	</form>
+{% endfor %}
+{% endblock %}
