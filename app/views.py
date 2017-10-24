@@ -98,9 +98,10 @@ def appraise(empid):
     form = appraiseForm(csrf_enabled=False)
     emp = employee.query.filter_by(id = empid).all()
     if request.method=='POST':
-        emp.score = int(request.form['score'])
-        db.session.commit()
-        emp.empNotes = request.form['notes']
+        score = int(request.form['score'])
+        notes = request.form['notes']
+        appr = emp(score = score, empNotes = notes)
+        db.session.add(appr)
         db.session.commit()
         flash("Appraisal has been submitted", "success")
         return render_template('appraisal.html', form=form, emp=emp)
