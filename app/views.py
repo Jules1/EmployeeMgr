@@ -98,16 +98,17 @@ def appraise(empid):
     form = appraiseForm(csrf_enabled=False)
     emp = employee.query.filter_by(id = empid).all()
     if request.method=='POST':
-        score = int(request.form['score'])
-        notes = request.form['notes']
-        appr = emp(score = score, empNotes = notes)
-        db.session.add(appr)
+        emp = employee.query.filter_by(id = empid).update(dict(score = int(request.form['score']), empNotes = request.form['notes']))
         db.session.commit()
         flash("Appraisal has been submitted", "success")
-        return render_template('appraisal.html', form=form, emp=emp)
+        return render_template('empProfile.html', employees=emp)
     else:
         flash("Something went wrong","danger")
     return render_template('appraisal.html', form=form, emp=emp)
+
+@app.route('/Vacation/<empid>', methods=['POST','GET'])
+def vacation(empid):
+    return render_template('vacationUpdate')
 ###
 # The functions below should be applicable to all Flask apps.
 ###
