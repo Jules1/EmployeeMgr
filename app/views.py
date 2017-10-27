@@ -38,6 +38,8 @@ class appraiseForm(Form):
     score = IntegerField('score',[validators.Required()], render_kw={"placeholder":"Appraisal Rating"})
     notes = TextAreaField('notes', [validators.Required()], render_kw={"placeholder":"Notes about employee"})
 
+class vacationForm(Form):
+    vacDays = IntegerField('vacDays', [validators.Required()], render_kw={"placeholder":"Amount of vacation days granted"})
 
 @app.route('/addEmployee/', methods = ['POST','GET'])
 def addEmployee():
