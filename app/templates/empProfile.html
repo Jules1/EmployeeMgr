@@ -5,6 +5,7 @@
    {%include 'flash_messages.html'%}
    {% for e in employees %}
       <h2>{{e.firstname}} {{e.lastname}}</h2>
+      <h3>{{e.position}}</h3>
     <div class="float2">
       <h3><button data-toggle="collapse" data-target="#contract">Contract Information</button></h3>
       <div id="contract" class="collapse">
@@ -15,9 +16,9 @@
 
       <h3><button data-toggle="collapse" data-target="#appraisal">Appraisal Information</button></h3>
       <div id="appraisal" class="appInfo collapse">
-        <a href="{{url_for('appraise', empid=e.id)}}">Add Appraisal</a><br><br>
     		<h4>Appraisal Rating: </h4>{{e.score}}
-    		<h4>Comments: </h4>{{e.empNotes}}
+    		<h4>Comments: </h4>{{e.empNotes}}<br><br>
+         <a href="{{url_for('appraise', empid=e.id)}}">Add Appraisal</a>
       </div>
     </div>
   </div>
@@ -27,7 +28,8 @@
         <h4>Vacation Days Remaining: </h4> {{e.vacationEnt}} days
         <h4>Vacation Taken: </h4> {{e.vacationtaken}} days
         <h4>Vacation Balance  </h4> {{e.vacationBalance}} days
-        <h4>Sick Leave Taken </h4> {{e.sickLeaveTaken}} days
+        <h4>Sick Leave Taken </h4> {{e.sickLeaveTaken}} days<br><br>
+        <a href="{{url_for('vacation', empid=e.id)}}">Grant Vacation Days</a>
       </div>
 
       <h3><button data-toggle="collapse" data-target="#salary">Salary Information</button></h3>
