@@ -82,6 +82,7 @@ def searchEmp():
         found = employee.query.filter_by(firstname = request.form['firstn']).all()
         if found is None:
            flash('No employee by that name was found', 'danger')
+           return render_template('search.html', form=form)
         else:
            flash('The following employees were found', 'success') 
         return render_template('search.html', form=form, employees=found)
@@ -103,7 +104,7 @@ def appraise(empid):
         emp = employee.query.filter_by(id = empid).update(dict(score = int(request.form['score']), empNotes = request.form['notes']))
         db.session.commit()
         flash("Appraisal has been submitted", "success")
-        return render_template('empProfile.html', employees=emp)
+        return render_template('home.html')
     else:
         flash("Something went wrong","danger")
     return render_template('appraisal.html', form=form, emp=emp)
@@ -115,6 +116,8 @@ def vacation(empid):
     emp = employee.query.filter_by(id=empid).all()
     if request.method == 'POST':
         emp.vacation += int(request.form['vacDays'])
+        emp.vacationBalance = emp.vacationBalance - emp.vacation
+        emp.sickLeaveBalance = emp.sickLeaveBalance - emp.vacation
         db.session.commit()
         return render_template('vacationUpdate.html',form=form, emp = emp)
     return render_template('vacationUpdate.html', form=form, emp=emp)

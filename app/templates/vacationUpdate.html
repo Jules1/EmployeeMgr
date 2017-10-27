@@ -6,8 +6,8 @@
 		<div class="form-group" align="center">
 			<h2>Vacation Information for {{e.firstname}} {{e.lastname}}</h2><br>
 			Initial available Vacation Days : {{e.vacationEnt}}<br><br>
-			Available Vacation Days: {{e.vacationDays}}<br><br>
-			Vacation days to be granted: {{form.vacation}}<br><br>
+			Available Vacation Days: {{e.vacationBalance}}<br><br>
+			Vacation days to be granted: {{form.vacDays}}<br><br>
 		</div>
 		<button type="submit" name="submit" class="btn btn-primary btn-block">Grant Vacation Days</button>
 		{%include 'flash_messages.html'%}
