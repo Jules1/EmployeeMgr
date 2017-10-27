@@ -21,3 +21,17 @@ table, th, td {
 th,td{
 	padding:5px;
 }
+
+.floater{
+	float: right;
+	list-style: none;
+	width:50%;
+	display: inline-block;
+}
+
+.float2{
+	float:left;
+	list-style:none;
+	width:50%;
+	display: inline-block;
+}
